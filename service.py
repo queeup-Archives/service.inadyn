@@ -60,7 +60,9 @@ while (not xbmc.abortRequested):
     STARTUP = False
     # check settings is allowing for service start with xbmc 
     if INADYN_START == 'true':
-      os.system('chmod +x %s/bin/inadyn' % __path__)
+      # if not executable change permission
+      if not os.access('%s/bin/inadyn' % __path__, os.X_OK):
+        os.chmod('%s/bin/inadyn' % __path__, 0755)
       #if check_running(['inadyn']):
       if Debug: LOG('inadyn starting!')
       # Start service
