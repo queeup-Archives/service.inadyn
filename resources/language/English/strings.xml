@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<!-- INADYN -->
+  <string id="1000">INADYN</string>
+  <string id="1020">Start INADYN on boot</string>
+  <string id="1021">Dyndns System</string>
+  <string id="1022">How often the IP is checked (min)?</string>
+  <string id="1023">Hostname</string>
+  <string id="1024">Username</string>
+  <string id="1025">Password</string>
+  <string id="1026">Set debug level</string>
+  <string id="1027">[I]Log file: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>  
+</strings>

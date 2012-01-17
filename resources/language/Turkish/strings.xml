@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<!-- INADYN -->
+  <string id="1000">INADYN</string>
+  <string id="1020">INADYN'yi açılışta başlat</string>
+  <string id="1021">Dyndns Sistemi</string>
+  <string id="1022">IP ne kadar sıklıkla kontrol edilsin (dk)?</string>
+  <string id="1023">Ana bilgisayar adı</string>
+  <string id="1024">Kullanıcı adı</string>
+  <string id="1025">Parola</string>
+  <string id="1026">Hata ayıklama seviyesini ayarla</string>
+  <string id="1027">[I]Log dosyası: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>  
+</strings>
