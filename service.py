@@ -72,14 +72,20 @@ INADYN_EXEC = '%s/bin/inadyn' % __path__
 INADYN_LOG = '%sinadyn.log ' % xbmc.translatePath(__cachedir__)
 
 inadyn = [INADYN_EXEC , \
-          '--dyndns_system', INADYN_SYSTEM, \
           '--update_period', str(INADYN_UPDATE), \
           '--alias', INADYN_HOST, \
           '--username', INADYN_USER, \
           '--password', INADYN_PWD, \
           '--log_file', INADYN_LOG, \
           '--verbose', INADYN_DBG, \
-          '--background']
+          '--background', ]
+
+# dnsomatic support
+if INADYN_SYSTEM == 'dnsomatic@dyndns.org':
+  inadyn += ['--dyndns_server_name', 'updates.dnsomatic.com', \
+             '--dyndns_server_url', '/nic/update?']
+else:
+  inadyn += ['--dyndns_system', INADYN_SYSTEM]
 
 # check settings is allowing for service start with xbmc
 if INADYN_START == 'true':

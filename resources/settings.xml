@@ -2,7 +2,7 @@
 <settings>
   <!-- INADYN -->
   <setting id="INADYN_START" type="bool" label="1020" default="false" />
-  <setting id="INADYN_SYSTEM" type="labelenum" label="1021" values="dyndns@dyndns.org|statdns@dyndns.org|custom@dyndns.org|default@freedns.afraid.org|default@zoneedit.com|default@no-ip.com" default="default@no-ip.com" enable="eq(-1,true)"/>
+  <setting id="INADYN_SYSTEM" type="labelenum" label="1021" values="dyndns@dyndns.org|statdns@dyndns.org|dnsomatic@dyndns.org|custom@dyndns.org|default@freedns.afraid.org|default@zoneedit.com|default@no-ip.com" default="default@no-ip.com" enable="eq(-1,true)"/>
   <setting id="INADYN_UPDATE" type="labelenum" label="1022" values="10|30|60" default="30" enable="eq(-2,true)"/>
   <setting id="INADYN_HOST" type="text" label="1023" default="" enable="eq(-3,true)"/>
   <setting id="INADYN_USER" type="text" label="1024" default="" enable="eq(-4,true)"/>

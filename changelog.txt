@@ -1,5 +1,8 @@
 service.inadyn:
 ---------------
+version 1.0.3 (02.03.2012)
+  -added dnsomatic.com support
+
 version 1.0.2 (20.01.2012)
   -make executable python way.
   -execute with subprocess.Popen rather then os.system
