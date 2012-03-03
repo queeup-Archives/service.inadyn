@@ -21,9 +21,9 @@ STARTUP = True
 now = datetime.datetime.now()
 
 def check(process):
-  p1 = Popen(['ps', 'ax', '-o', 'pid,args'], shell=False, stdout=PIPE, stderr=PIPE)
-  p2 = Popen(['grep', process], shell=False, stdin=p1.stdout, stdout=PIPE, stderr=PIPE)
-  p3 = Popen(['grep', '-v', 'grep'], shell=False, stdin=p2.stdout, stdout=PIPE, stderr=PIPE)
+  p1 = Popen(['ps', 'ax', '-o', 'pid,args'], shell=False, stdout=PIPE, stderr=PIPE, close_fds=True)
+  p2 = Popen(['grep', process], shell=False, stdin=p1.stdout, stdout=PIPE, stderr=PIPE, close_fds=True)
+  p3 = Popen(['grep', '-v', 'grep'], shell=False, stdin=p2.stdout, stdout=PIPE, stderr=PIPE, close_fds=True)
   stdout, stderr = p3.communicate()
   if stdout:
     pid = re.findall('(\d+)', stdout)[0]
@@ -31,7 +31,7 @@ def check(process):
   return False, None
 
 def execute(arg):
-  p = Popen(arg, shell=False, stdout=PIPE)
+  p = Popen(arg, shell=False, stdout=PIPE, close_fds=True)
   pid = p.pid
   if pid:
     return True, pid + 1
