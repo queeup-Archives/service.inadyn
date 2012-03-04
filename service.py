@@ -13,9 +13,7 @@ __version__ = __info__('version')
 __icon__ = __info__('icon')
 __path__ = __info__('path')
 __cachedir__ = __info__('profile')
-__language__ = __addon__.getLocalizedString
 __settings__ = __addon__.getSetting
-__set_settings__ = __addon__.setSetting
 
 now = datetime.datetime.now()
 
@@ -45,7 +43,7 @@ def notification(title, message):
     xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % \
                                      (title.encode('utf-8', 'ignore'), message.encode('utf-8', 'ignore'), 6000, __icon__))
 # thanks to @amet
-def waiter(seconds, pid):
+def waiter(seconds):
   LOG("Delaying %s secs" % seconds)
   for i in range(1, seconds):
     time.sleep(1)
@@ -98,17 +96,15 @@ else:
   if Debug: LOG('inadyn already running!')
   pid = _pid
 
-
 while (not xbmc.abortRequested):
   if datetime.datetime.now().minute >= ((now.minute / 5) * 5) + 5 or (datetime.datetime.now().hour > now.hour) or (datetime.datetime.now().hour == 1 and now.hour == 12) or (datetime.datetime.now().hour == 0 and now.hour == 23) :
     wait = 240
   else:
     wait = 3
-  waiter(wait, int(pid))
+  waiter(wait)
 
 # kill inadyn before xbmc
-if xbmc.abortRequested == True:
-  kill(pid)
-  if Debug: LOG('inadyn stoping!')
-  time.sleep(1)
-  sys.exit()
+kill(pid)
+if Debug: LOG('inadyn stoping!')
+time.sleep(1)
+sys.exit()
