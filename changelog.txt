@@ -3,6 +3,7 @@ service.inadyn:
 version 1.0.4
   -resolves the issue of stealing the xbmc webserver port
   -some code cleaning
+  -import reordered and added missing sys module
   
 version 1.0.3 (02.03.2012)
   -added dnsomatic.com support

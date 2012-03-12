@@ -3,7 +3,8 @@
 # Debug
 Debug = True
 
-import xbmc, xbmcaddon, os, datetime, time, re, signal
+import sys, os, datetime, time, re, signal
+import xbmc, xbmcaddon
 from subprocess import Popen, PIPE
 
 __addon__ = xbmcaddon.Addon(id='service.inadyn')
