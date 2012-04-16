@@ -1,11 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Debug
-Debug = True
-
-import sys, os, datetime, time, re, signal
-import xbmc, xbmcaddon
 from subprocess import Popen, PIPE
+import sys
+import os
+import datetime
+import time
+import re
+import signal
+import xbmc
+import xbmcaddon
+
+# DEBUG
+DEBUG = True
 
 __addon__ = xbmcaddon.Addon(id='service.inadyn')
 __info__ = __addon__.getAddonInfo
@@ -18,6 +24,7 @@ __settings__ = __addon__.getSetting
 
 now = datetime.datetime.now()
 
+
 def check(process):
   p1 = Popen(['ps', 'ax', '-o', 'pid,args'], shell=False, stdout=PIPE, stderr=PIPE, close_fds=True)
   p2 = Popen(['grep', process], shell=False, stdin=p1.stdout, stdout=PIPE, stderr=PIPE, close_fds=True)
@@ -28,24 +35,30 @@ def check(process):
     return True, pid
   return False, None
 
+
 def execute(arg):
   p = Popen(arg, shell=False, stdout=PIPE, close_fds=True)
   pid = p.pid
   if pid:
     return True, pid + 1
 
+
 def kill(pid):
   os.kill(int(pid), signal.SIGUSR1)
 
-def LOG(description):
+
+def log(description):
     xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
+
 
 def notification(title, message):
     xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % \
                                      (title.encode('utf-8', 'ignore'), message.encode('utf-8', 'ignore'), 6000, __icon__))
+
+
 # thanks to @amet
 def waiter(seconds):
-  LOG("Delaying %s secs" % seconds)
+  log("Delaying %s secs" % seconds)
   for i in range(1, seconds):
     time.sleep(1)
 
@@ -61,7 +74,7 @@ INADYN_DBG = __settings__('INADYN_DBG')
 INADYN_EXEC = '%s/bin/inadyn' % __path__
 INADYN_LOG = '%sinadyn.log ' % xbmc.translatePath(__cachedir__)
 
-inadyn = [INADYN_EXEC , \
+inadyn = [INADYN_EXEC, \
           '--update_period', str(INADYN_UPDATE), \
           '--alias', INADYN_HOST, \
           '--username', INADYN_USER, \
@@ -81,7 +94,7 @@ else:
 if not os.access('%s/bin/inadyn' % __path__, os.X_OK):
   os.chmod('%s/bin/inadyn' % __path__, 0755)
 
-# check if inadyn already running. If running find pid number 
+# check if inadyn already running. If running find pid number
 _status, _pid = check('inadyn')
 if not _status:
   # check settings is allowing for service start with xbmc
@@ -89,16 +102,19 @@ if not _status:
     # Start service
     status, pid = execute(inadyn)
     if status:
-      if Debug: LOG('inadyn starting!')
+      if DEBUG:
+        log('inadyn starting!')
   else:
-    if Debug: LOG('inadyn service disabled from settings!!!')
+    if DEBUG:
+      log('inadyn service disabled from settings!!!')
     sys.exit()
 else:
-  if Debug: LOG('inadyn already running!')
+  if DEBUG:
+    log('inadyn already running!')
   pid = _pid
 
 while (not xbmc.abortRequested):
-  if datetime.datetime.now().minute >= ((now.minute / 5) * 5) + 5 or (datetime.datetime.now().hour > now.hour) or (datetime.datetime.now().hour == 1 and now.hour == 12) or (datetime.datetime.now().hour == 0 and now.hour == 23) :
+  if datetime.datetime.now().minute >= ((now.minute / 5) * 5) + 5 or (datetime.datetime.now().hour > now.hour) or (datetime.datetime.now().hour == 1 and now.hour == 12) or (datetime.datetime.now().hour == 0 and now.hour == 23):
     wait = 240
   else:
     wait = 3
@@ -106,6 +122,7 @@ while (not xbmc.abortRequested):
 
 # kill inadyn before xbmc
 kill(pid)
-if Debug: LOG('inadyn stoping!')
+if DEBUG:
+  log('inadyn stoping!')
 time.sleep(1)
 sys.exit()
