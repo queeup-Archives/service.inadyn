@@ -4,7 +4,6 @@ from subprocess import Popen, PIPE
 import sys
 import os
 import datetime
-import time
 import re
 import signal
 import xbmc
@@ -54,13 +53,6 @@ def log(description):
 def notification(title, message):
     xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % \
                                      (title.encode('utf-8', 'ignore'), message.encode('utf-8', 'ignore'), 6000, __icon__))
-
-
-# thanks to @amet
-def waiter(seconds):
-  log("Delaying %s secs" % seconds)
-  for i in range(1, seconds):
-    time.sleep(1)
 
 # Get settings
 INADYN_START = __settings__('INADYN_START')
@@ -114,15 +106,11 @@ else:
   pid = _pid
 
 while (not xbmc.abortRequested):
-  if datetime.datetime.now().minute >= ((now.minute / 5) * 5) + 5 or (datetime.datetime.now().hour > now.hour) or (datetime.datetime.now().hour == 1 and now.hour == 12) or (datetime.datetime.now().hour == 0 and now.hour == 23):
-    wait = 240
-  else:
-    wait = 3
-  waiter(wait)
+  xbmc.sleep(bool(0.250))
 
 # kill inadyn before xbmc
 kill(pid)
 if DEBUG:
   log('inadyn stoping!')
-time.sleep(1)
+xbmc.sleep(1)
 sys.exit()
