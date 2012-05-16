@@ -92,7 +92,7 @@ if not _status:
   # check settings is allowing for service start with xbmc
   if INADYN_START == 'true':
     # Start service
-    status, pid = execute(inadyn)
+    status, _pid = execute(inadyn)
     if status:
       if DEBUG:
         log('inadyn starting!')
@@ -103,13 +103,12 @@ if not _status:
 else:
   if DEBUG:
     log('inadyn already running!')
-  pid = _pid
 
 while (not xbmc.abortRequested):
   xbmc.sleep(bool(0.250))
 
 # kill inadyn before xbmc
-kill(pid)
+kill(_pid)
 if DEBUG:
   log('inadyn stoping!')
 xbmc.sleep(1)
