@@ -1,5 +1,8 @@
 service.inadyn:
 ---------------
+version 2.0.1 (17.05.2012)
+-correct pid number for kill process.
+
 version 2.0.0 (10.05.2012)
 -use xbmc.sleep insted of time.sleep
 -code cleanup and reorder with pep8 guides
