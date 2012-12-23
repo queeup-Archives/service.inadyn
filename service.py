@@ -50,9 +50,9 @@ def log(description):
     xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
 
 
-def notification(title, message):
-    xbmc.executebuiltin("Notification(%s, %s, %d, %s)" % \
-                                     (title.encode('utf-8', 'ignore'), message.encode('utf-8', 'ignore'), 6000, __icon__))
+def notification(title, message, image=__icon__, displaytime=6000):
+  xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title": "%s", "message": "%s", "image": "%s", "displaytime": %i}, "id": "%s"}' % \
+                      (title, message, image, displaytime, __addon__.getAddonInfo('id')))
 
 # Get settings
 INADYN_START = __settings__('INADYN_START')
