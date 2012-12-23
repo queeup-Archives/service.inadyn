@@ -3,7 +3,6 @@
 from subprocess import Popen, PIPE
 import sys
 import os
-import datetime
 import re
 import signal
 import xbmc
@@ -12,16 +11,13 @@ import xbmcaddon
 # DEBUG
 DEBUG = True
 
-__addon__ = xbmcaddon.Addon(id='service.inadyn')
-__info__ = __addon__.getAddonInfo
-__plugin__ = __info__('name')
-__version__ = __info__('version')
-__icon__ = __info__('icon')
-__path__ = __info__('path')
-__cachedir__ = __info__('profile')
+__addon__ = xbmcaddon.Addon()
+__plugin__ = __addon__.getAddonInfo('name')
+__version__ = __addon__.getAddonInfo('version')
+__icon__ = __addon__.getAddonInfo('icon')
+__path__ = __addon__.getAddonInfo('path')
+__cachedir__ = __addon__.getAddonInfo('profile')
 __settings__ = __addon__.getSetting
-
-now = datetime.datetime.now()
 
 
 def check(process):
@@ -47,7 +43,7 @@ def kill(pid):
 
 
 def log(description):
-    xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
+  xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
 
 
 def notification(title, message, image=__icon__, displaytime=6000):
