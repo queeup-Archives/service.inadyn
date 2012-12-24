@@ -2,7 +2,7 @@
 <strings>
 	<!-- INADYN -->
   <string id="1000">INADYN</string>
-  <string id="1020">INADYN'yi açılışta başlat</string>
+  <string id="1020">INADYN'yi önyüklemede başlat</string>
   <string id="1021">Dyndns Sistemi</string>
   <string id="1022">IP ne kadar sıklıkla kontrol edilsin (dk)?</string>
   <string id="1023">Ana bilgisayar adı</string>
