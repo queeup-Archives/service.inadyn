@@ -27,6 +27,7 @@ INADYN_USER = __settings__('INADYN_USER')
 INADYN_PWD = __settings__('INADYN_PWD')
 INADYN_DBG = __settings__('INADYN_DBG')
 
+# TODO: add i686/x86_64/arm binary files
 INADYN_EXEC = '%s/bin/inadyn' % __path__
 INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
 INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
