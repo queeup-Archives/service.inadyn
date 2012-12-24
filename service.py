@@ -31,9 +31,22 @@ INADYN_EXEC = '%s/bin/inadyn' % __path__
 INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
 INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
 
+inadyn = [INADYN_EXEC, \
+          '--period', str(INADYN_UPDATE), \
+          '--system', INADYN_SYSTEM, \
+          '--alias', INADYN_HOST, \
+          '--username', INADYN_USER, \
+          '--password', INADYN_PWD, \
+          '--logfile', INADYN_LOG, \
+          '--pidfile', INADYN_PID, \
+          '--verbose', INADYN_DBG, \
+          '--background', ]
 
-def check(process):
+
+def check():
+  # check if pid file exist
   if os.path.isfile(INADYN_PID):
+    # read pid from pid file
     pid = int(open(INADYN_PID, 'r').read())
     return True, pid
   else:
@@ -49,7 +62,9 @@ def execute(arg):
 
 
 def kill(pid):
+  # kill process
   os.kill(int(pid), signal.SIGUSR1)
+  # erase pid file
   os.unlink(INADYN_PID)
 
 
@@ -61,25 +76,14 @@ def notification(title, message, image=__icon__, displaytime=6000):
   xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title": "%s", "message": "%s", "image": "%s", "displaytime": %i}, "id": "%s"}' % \
                       (title, message, image, displaytime, __addon__.getAddonInfo('id')))
 
-inadyn = [INADYN_EXEC, \
-          '--period', str(INADYN_UPDATE), \
-          '--system', INADYN_SYSTEM, \
-          '--alias', INADYN_HOST, \
-          '--username', INADYN_USER, \
-          '--password', INADYN_PWD, \
-          '--logfile', INADYN_LOG, \
-          '--pidfile', INADYN_PID, \
-          '--verbose', INADYN_DBG, \
-          '--background', ]
-
 # if not executable change permission
-if not os.access('%s/bin/inadyn' % __path__, os.X_OK):
-  os.chmod('%s/bin/inadyn' % __path__, 0755)
+if not os.access(INADYN_EXEC, os.X_OK):
+  os.chmod(INADYN_EXEC, 0755)
 
 # check settings is allowing for service start with xbmc
 if INADYN_START == 'true':
   # check if inadyn already running. If running find pid number
-  _status, _pid = check('inadyn')
+  _status, _pid = check()
   if not _status:
       # Start service
       status, _pid = execute(inadyn)
