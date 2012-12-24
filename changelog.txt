@@ -1,5 +1,10 @@
 service.inadyn:
 ---------------
+version 2.0.2 (24.12.2012)
+-use jsonrpc notification insted of executebuiltin
+-updated to 1.98.1 from https://github.com/troglobit/inadyn
+-cosmetic
+
 version 2.0.1 (17.05.2012)
 -correct pid number for kill process.
 
