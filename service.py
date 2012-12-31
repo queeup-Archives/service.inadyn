@@ -33,14 +33,14 @@ INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
 INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
 
 inadyn = [INADYN_EXEC, \
-          '--period', str(INADYN_UPDATE), \
-          '--system', INADYN_SYSTEM, \
-          '--alias', INADYN_HOST, \
-          '--username', INADYN_USER, \
-          '--password', INADYN_PWD, \
-          '--logfile', INADYN_LOG, \
-          '--pidfile', INADYN_PID, \
-          '--verbose', INADYN_DBG, \
+          '--period', str(INADYN_UPDATE),
+          '--system', INADYN_SYSTEM,
+          '--alias', INADYN_HOST,
+          '--username', INADYN_USER,
+          '--password', INADYN_PWD,
+          '--logfile', INADYN_LOG,
+          '--pidfile', INADYN_PID,
+          '--verbose', INADYN_DBG,
           '--background', ]
 
 
