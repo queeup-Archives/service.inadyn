@@ -1,5 +1,9 @@
 service.inadyn:
 ---------------
+version 2.0.3 (31.12.2012)
+-i386/i686/x86_64/arm binary support
+-cosmetic
+
 version 2.0.2 (24.12.2012)
 -use jsonrpc notification insted of executebuiltin
 -updated to 1.98.1 from https://github.com/troglobit/inadyn
