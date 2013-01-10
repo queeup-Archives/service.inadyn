@@ -1,5 +1,8 @@
 service.inadyn:
 ---------------
+version 2.0.4 (10.01.2013)
+-if kill failed .pid file must be removed.
+
 version 2.0.3 (31.12.2012)
 -i386/i686/x86_64/arm binary support
 -cosmetic
