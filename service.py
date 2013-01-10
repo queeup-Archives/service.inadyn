@@ -63,10 +63,14 @@ def execute(arg):
 
 
 def kill(pid):
-  # kill process
-  os.kill(int(pid), signal.SIGUSR1)
-  # erase pid file
-  os.unlink(INADYN_PID)
+  try:
+    # kill process
+    os.kill(int(pid), signal.SIGUSR1)
+    # erase pid file
+    os.unlink(INADYN_PID)
+  except:
+    # erase pid file
+    os.unlink(INADYN_PID)
 
 
 def log(description):
@@ -107,4 +111,4 @@ if INADYN_START == 'true':
 else:
   if DEBUG:
     log('inadyn service disabled from settings!!!')
-  #notification(__plugin__, 'inadyn service disabled from settings!!!')
+  # notification(__plugin__, 'inadyn service disabled from settings!!!')
