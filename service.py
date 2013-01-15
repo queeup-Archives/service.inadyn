@@ -65,7 +65,7 @@ def execute(arg):
 def kill(pid):
   try:
     # kill process
-    os.kill(int(pid), signal.SIGUSR1)
+    os.kill(int(pid), signal.SIGTERM)
     # erase pid file
     os.unlink(INADYN_PID)
   except:
