@@ -48,8 +48,8 @@ def check():
   # check if pid file exist
   if os.path.isfile(INADYN_PID):
     # read pid from pid file
-    pid = int(open(INADYN_PID, 'r').read())
-    return True, pid
+    with open(INADYN_PID, 'r') as pid:
+      return True, int(pid.read())
   else:
     return False, None
 
