@@ -31,6 +31,7 @@ INADYN_DBG = __settings__('INADYN_DBG')
 INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
 INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
 INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
+INADYN_CACHE = '%sinadyn.cache' % xbmc.translatePath(__cachedir__)
 
 inadyn = [INADYN_EXEC, \
           '--period', str(INADYN_UPDATE),
@@ -40,6 +41,7 @@ inadyn = [INADYN_EXEC, \
           '--password', INADYN_PWD,
           '--logfile', INADYN_LOG,
           '--pidfile', INADYN_PID,
+          '--cachefile', INADYN_CACHE,
           '--verbose', INADYN_DBG,
           '--background', ]
 
