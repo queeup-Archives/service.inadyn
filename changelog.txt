@@ -1,5 +1,8 @@
 service.inadyn:
 ---------------
+version 2.0.7 (29.11.2013)
+-inadyn binary updated to 1.99.5
+
 version 2.0.6 (06.11.2013)
 -inadyn binary updated to 1.99.4
 
