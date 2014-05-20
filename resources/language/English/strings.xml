@@ -2,8 +2,13 @@
 <strings>
 	<!-- INADYN -->
   <string id="1000">INADYN</string>
+  <string id="1010">How to config your server?</string>
+  <string id="1011">Auto</string>
+  <string id="1012">Manual</string>
+  <string id="1013">Server Name</string>
+  <string id="1014">Server Url</string>
   <string id="1020">Start INADYN on boot</string>
-  <string id="1021">Dyndns System</string>
+  <string id="1021">DDNS service provider</string>
   <string id="1022">How often the IP is checked (min)?</string>
   <string id="1023">Hostname</string>
   <string id="1024">Username</string>

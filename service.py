@@ -32,16 +32,30 @@ INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
 INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
 INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
 
-inadyn = [INADYN_EXEC, \
-          '--period', str(INADYN_UPDATE),
-          '--system', INADYN_SYSTEM,
-          '--alias', INADYN_HOST,
-          '--username', INADYN_USER,
-          '--password', INADYN_PWD,
-          '--logfile', INADYN_LOG,
-          '--pidfile', INADYN_PID,
-          '--verbose', INADYN_DBG,
-          '--background', ]
+if int(__settings__('INADYN_SYSTEM_CONFIG')) == 1:
+  inadyn = [INADYN_EXEC, \
+            '--period', str(INADYN_UPDATE),
+            '--system', 'custom@http_srv_basic_auth',
+            '--server-name', __settings__('MANUAL_INADYN_SERVER_NAME'),
+            '--server-url', __settings__('MANUAL_INADYN_SERVER_URL'),
+            '--alias', INADYN_HOST,
+            '--username', INADYN_USER,
+            '--password', INADYN_PWD,
+            '--logfile', INADYN_LOG,
+            '--pidfile', INADYN_PID,
+            '--verbose', INADYN_DBG,
+            '--background', ]
+else:
+  inadyn = [INADYN_EXEC, \
+            '--period', str(INADYN_UPDATE),
+            '--system', INADYN_SYSTEM,
+            '--alias', INADYN_HOST,
+            '--username', INADYN_USER,
+            '--password', INADYN_PWD,
+            '--logfile', INADYN_LOG,
+            '--pidfile', INADYN_PID,
+            '--verbose', INADYN_DBG,
+            '--background', ]
 
 
 def check():

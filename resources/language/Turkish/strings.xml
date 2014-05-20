@@ -2,11 +2,16 @@
 <strings>
 	<!-- INADYN -->
   <string id="1000">INADYN</string>
+  <string id="1010">Sunucu nasıl yapılandırılsın?</string>
+  <string id="1011">Otomatik</string>
+  <string id="1012">El ile</string>
+  <string id="1013">Sunucu Adı</string>
+  <string id="1014">Sunucu Url'si</string>
   <string id="1020">INADYN'yi önyüklemede başlat</string>
-  <string id="1021">Dyndns Sistemi</string>
+  <string id="1021">DDNS hizmet sağlıyıcı</string>
   <string id="1022">IP ne kadar sıklıkla kontrol edilsin (dk)?</string>
   <string id="1023">Ana bilgisayar adı</string>
-  <string id="1024">Kullanıcı adı</string>
+  <string id="1024">Kullanıcı Adı</string>
   <string id="1025">Parola</string>
   <string id="1026">Hata ayıklama seviyesini ayarla</string>
   <string id="1027">[I]Log dosyası: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>  
