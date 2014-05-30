@@ -73,6 +73,7 @@ class Main:
                 '--password', self.INADYN_PWD,
                 '--logfile', self.INADYN_LOG,
                 '--pidfile', self.INADYN_PID,
+                '--cache-dir', xbmc.translatePath(__cachedir__),
                 '--verbose', self.INADYN_DBG,
                 '--background', ]
     else:
@@ -84,6 +85,7 @@ class Main:
                 '--password', self.INADYN_PWD,
                 '--logfile', self.INADYN_LOG,
                 '--pidfile', self.INADYN_PID,
+                '--cache-dir', xbmc.translatePath(__cachedir__),
                 '--verbose', self.INADYN_DBG,
                 '--background', ]
 
