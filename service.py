@@ -39,6 +39,7 @@ class Monitor(xbmc.Monitor):
 
 class Main:
   def __init__(self):
+    self.pid = None
     self._get_settings()
     # self._monitor = Monitor(action=self.restart_service)
     self._monitor = Monitor(restart=self.restart_service, stop=self.stop_service)
@@ -64,30 +65,30 @@ class Main:
 
     if int(__settings__('INADYN_SYSTEM_CONFIG')) == 1:
       self.inadyn = [self.INADYN_EXEC,
-                '--period', str(self.INADYN_UPDATE),
-                '--system', 'custom@http_srv_basic_auth',
-                '--server-name', __settings__('MANUAL_INADYN_SERVER_NAME'),
-                '--server-url', __settings__('MANUAL_INADYN_SERVER_URL'),
-                '--alias', self.INADYN_HOST,
-                '--username', self.INADYN_USER,
-                '--password', self.INADYN_PWD,
-                '--logfile', self.INADYN_LOG,
-                '--pidfile', self.INADYN_PID,
-                '--cache-dir', xbmc.translatePath(__cachedir__),
-                '--verbose', self.INADYN_DBG,
-                '--background', ]
+                     '--period', str(self.INADYN_UPDATE),
+                     '--system', 'custom@http_srv_basic_auth',
+                     '--server-name', __settings__('MANUAL_INADYN_SERVER_NAME'),
+                     '--server-url', __settings__('MANUAL_INADYN_SERVER_URL'),
+                     '--alias', self.INADYN_HOST,
+                     '--username', self.INADYN_USER,
+                     '--password', self.INADYN_PWD,
+                     '--logfile', self.INADYN_LOG,
+                     '--pidfile', self.INADYN_PID,
+                     '--cache-dir', xbmc.translatePath(__cachedir__),
+                     '--verbose', self.INADYN_DBG,
+                     '--background', ]
     else:
       self.inadyn = [self.INADYN_EXEC,
-                '--period', str(self.INADYN_UPDATE),
-                '--system', self.INADYN_SYSTEM,
-                '--alias', self.INADYN_HOST,
-                '--username', self.INADYN_USER,
-                '--password', self.INADYN_PWD,
-                '--logfile', self.INADYN_LOG,
-                '--pidfile', self.INADYN_PID,
-                '--cache-dir', xbmc.translatePath(__cachedir__),
-                '--verbose', self.INADYN_DBG,
-                '--background', ]
+                     '--period', str(self.INADYN_UPDATE),
+                     '--system', self.INADYN_SYSTEM,
+                     '--alias', self.INADYN_HOST,
+                     '--username', self.INADYN_USER,
+                     '--password', self.INADYN_PWD,
+                     '--logfile', self.INADYN_LOG,
+                     '--pidfile', self.INADYN_PID,
+                     '--cache-dir', xbmc.translatePath(__cachedir__),
+                     '--verbose', self.INADYN_DBG,
+                     '--background', ]
 
   def check(self):
     # check if pid file exist
@@ -128,7 +129,7 @@ class Main:
         if DEBUG:
           log('inadyn already running!')
 
-      while (not xbmc.abortRequested):
+      while not xbmc.abortRequested:
         xbmc.sleep(bool(0.250))
 
     else:
@@ -148,5 +149,5 @@ class Main:
       log('inadyn restarting!')
     self.__init__()
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
   Main()
