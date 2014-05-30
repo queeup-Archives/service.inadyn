@@ -107,14 +107,7 @@ class Main:
       return True, pid
 
   def kill(self, pid):
-    try:
-      # kill process
-      os.kill(int(pid), signal.SIGTERM)
-      # erase pid file
-      os.unlink(self.INADYN_PID)
-    except:
-      # erase pid file
-      os.unlink(self.INADYN_PID)
+    os.kill(int(pid), signal.SIGTERM)
 
   def notification(self, title, message, image=__icon__, displaytime=6000):
     xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title": "%s", "message": "%s", "image": "%s", "displaytime": %i}, "id": "%s"}' % \
