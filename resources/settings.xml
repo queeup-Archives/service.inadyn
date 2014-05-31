@@ -4,7 +4,7 @@
   <setting id="INADYN_START" type="bool" label="1020" default="false"/>
   <setting id="INADYN_SYSTEM_CONFIG" type="enum" label="1010" lvalues="1011|1012" default="1011" enable="eq(-1,true)" visible="eq(-1,true)"/>
   <setting type="sep"/>
-  <setting id="INADYN_SYSTEM" type="labelenum" label="1021" values="default@dyndns.org|default@freedns.afraid.org|default@zoneedit.com|default@no-ip.com|default@easydns.com|default@tzo.com|dyndns@3322.org|default@dnsomatic.com|ipv6tb@he.net|dyndns@he.net|default@dynsip.org|default@sitelutions.com|default@dnsexit.com" default="default@no-ip.com" enable="eq(-2,0) + eq(-3,true)" visible="eq(-2,0) + eq(-3,true)"/>
+  <setting id="INADYN_SYSTEM" type="labelenum" label="1021" values="default@dyndns.org|default@freedns.afraid.org|default@zoneedit.com|default@no-ip.com|default@easydns.com|default@tzo.com|dyndns@3322.org|default@dnsomatic.com|ipv6tb@he.net|dyndns@he.net|default@dynsip.org|default@sitelutions.com|default@dnsexit.com|default@changeip.com|default@zerigo.com|default@dhis.org" default="default@no-ip.com" enable="eq(-2,0) + eq(-3,true)" visible="eq(-2,0) + eq(-3,true)"/>
   <setting id="MANUAL_INADYN_SERVER_NAME" type="text" label="1013" default="" enable="eq(-3,1) + eq(-4,true)" visible="eq(-3,1) + eq(-4,true)"/>
   <setting id="MANUAL_INADYN_SERVER_URL" type="text" label="1014" default="" enable="eq(-4,1) + eq(-5,true)" visible="eq(-4,1) + eq(-5,true)"/>
   <setting id="INADYN_HOST" type="text" label="1023" default="" enable="eq(-6,true)" visible="eq(-6,true)"/>
