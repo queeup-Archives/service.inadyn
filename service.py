@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from subprocess import Popen, PIPE
-import sys
 import os
 import signal
 import xbmc
@@ -18,111 +17,140 @@ __path__ = __addon__.getAddonInfo('path')
 __cachedir__ = __addon__.getAddonInfo('profile')
 __settings__ = __addon__.getSetting
 
-# Get settings
-INADYN_START = __settings__('INADYN_START')
-INADYN_SYSTEM = __settings__('INADYN_SYSTEM')
-INADYN_UPDATE = int(__settings__('INADYN_UPDATE')) * 60
-INADYN_HOST = __settings__('INADYN_HOST')
-INADYN_USER = __settings__('INADYN_USER')
-INADYN_PWD = __settings__('INADYN_PWD')
-INADYN_DBG = __settings__('INADYN_DBG')
-
-# i386/i686/x86_64/arm binary support
-INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
-INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
-INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
-
-if int(__settings__('INADYN_SYSTEM_CONFIG')) == 1:
-  inadyn = [INADYN_EXEC, \
-            '--period', str(INADYN_UPDATE),
-            '--system', 'custom@http_srv_basic_auth',
-            '--server-name', __settings__('MANUAL_INADYN_SERVER_NAME'),
-            '--server-url', __settings__('MANUAL_INADYN_SERVER_URL'),
-            '--alias', INADYN_HOST,
-            '--username', INADYN_USER,
-            '--password', INADYN_PWD,
-            '--logfile', INADYN_LOG,
-            '--pidfile', INADYN_PID,
-            '--verbose', INADYN_DBG,
-            '--background', ]
-else:
-  inadyn = [INADYN_EXEC, \
-            '--period', str(INADYN_UPDATE),
-            '--system', INADYN_SYSTEM,
-            '--alias', INADYN_HOST,
-            '--username', INADYN_USER,
-            '--password', INADYN_PWD,
-            '--logfile', INADYN_LOG,
-            '--pidfile', INADYN_PID,
-            '--verbose', INADYN_DBG,
-            '--background', ]
-
-
-def check():
-  # check if pid file exist
-  if os.path.isfile(INADYN_PID):
-    # read pid from pid file
-    with open(INADYN_PID, 'r') as pid:
-      return True, int(pid.read())
-  else:
-    return False, None
-
-
-def execute(arg):
-  p = Popen(arg, shell=False, stdout=PIPE, close_fds=True)
-  pid = p.pid + 1
-  p.communicate()
-  if pid:
-    return True, pid
-
-
-def kill(pid):
-  try:
-    # kill process
-    os.kill(int(pid), signal.SIGTERM)
-    # erase pid file
-    os.unlink(INADYN_PID)
-  except:
-    # erase pid file
-    os.unlink(INADYN_PID)
-
 
 def log(description):
-  xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
+    xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
 
 
-def notification(title, message, image=__icon__, displaytime=6000):
-  xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title": "%s", "message": "%s", "image": "%s", "displaytime": %i}, "id": "%s"}' % \
-                      (title, message, image, displaytime, __addon__.getAddonInfo('id')))
+class Monitor(xbmc.Monitor):
+  def __init__(self, *args, **kwargs):
+    xbmc.Monitor.__init__(self)
+    self.restart = kwargs['restart']
+    self.stop = kwargs['stop']
 
-# if not executable change permission
-if not os.access(INADYN_EXEC, os.X_OK):
-  os.chmod(INADYN_EXEC, 0755)
+  def onSettingsChanged(self):
+    log('Settings Changed!')
+    self.restart()
 
-# check settings is allowing for service start with xbmc
-if INADYN_START == 'true':
-  # check if inadyn already running. If running find pid number
-  _status, _pid = check()
-  if not _status:
-      # Start service
-      status, _pid = execute(inadyn)
-      if status:
+  def onAbortRequested(self):
+    log('Stoping Inadyn Service!')
+    self.stop()
+
+
+class Main:
+  def __init__(self):
+    self.pid = None
+    self._get_settings()
+    # self._monitor = Monitor(action=self.restart_service)
+    self._monitor = Monitor(restart=self.restart_service, stop=self.stop_service)
+    # if not executable change permission
+    if not os.access(self.INADYN_EXEC, os.X_OK):
+      os.chmod(self.INADYN_EXEC, 0755)
+    self.start_service()
+
+  def _get_settings(self):
+    # Get settings
+    self.INADYN_START = __settings__('INADYN_START')
+    self.INADYN_SYSTEM = __settings__('INADYN_SYSTEM')
+    self.INADYN_UPDATE = int(__settings__('INADYN_UPDATE')) * 60
+    self.INADYN_HOST = __settings__('INADYN_HOST')
+    self.INADYN_USER = __settings__('INADYN_USER')
+    self.INADYN_PWD = __settings__('INADYN_PWD')
+    self.INADYN_DBG = __settings__('INADYN_DBG')
+
+    # i386/i686/x86_64/arm binary support
+    self.INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
+    self.INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
+    self.INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
+
+    if int(__settings__('INADYN_SYSTEM_CONFIG')) == 1:
+      self.inadyn = [self.INADYN_EXEC,
+                     '--period', str(self.INADYN_UPDATE),
+                     '--system', 'custom@http_srv_basic_auth',
+                     '--server-name', __settings__('MANUAL_INADYN_SERVER_NAME'),
+                     '--server-url', __settings__('MANUAL_INADYN_SERVER_URL'),
+                     '--alias', self.INADYN_HOST,
+                     '--username', self.INADYN_USER,
+                     '--password', self.INADYN_PWD,
+                     '--logfile', self.INADYN_LOG,
+                     '--pidfile', self.INADYN_PID,
+                     '--cache-dir', xbmc.translatePath(__cachedir__),
+                     '--verbose', self.INADYN_DBG,
+                     '--background', ]
+    else:
+      self.inadyn = [self.INADYN_EXEC,
+                     '--period', str(self.INADYN_UPDATE),
+                     '--system', self.INADYN_SYSTEM,
+                     '--alias', self.INADYN_HOST,
+                     '--username', self.INADYN_USER,
+                     '--password', self.INADYN_PWD,
+                     '--logfile', self.INADYN_LOG,
+                     '--pidfile', self.INADYN_PID,
+                     '--cache-dir', xbmc.translatePath(__cachedir__),
+                     '--verbose', self.INADYN_DBG,
+                     '--background', ]
+
+  def check(self):
+    # check if pid file exist
+    if os.path.isfile(self.INADYN_PID):
+      # read pid from pid file
+      with open(self.INADYN_PID, 'r') as pid:
+        return True, int(pid.read())
+    else:
+      return False, None
+
+  def execute(self, arg):
+    p = Popen(arg, shell=False, stdout=PIPE, close_fds=True)
+    pid = p.pid + 1
+    p.communicate()
+    if pid:
+      self.pid = pid
+      return True, pid
+
+  def kill(self, pid):
+    os.kill(int(pid), signal.SIGTERM)
+
+  def notification(self, title, message, image=__icon__, displaytime=6000):
+    xbmc.executeJSONRPC('{"jsonrpc": "2.0", "method": "GUI.ShowNotification", "params": {"title": "%s", "message": "%s", "image": "%s", "displaytime": %i}, "id": "%s"}' % \
+                        (title, message, image, displaytime, __addon__.getAddonInfo('id')))
+
+  def start_service(self):
+    # check settings is allowing for service start with xbmc
+    if self.INADYN_START == 'true':
+      # check if inadyn already running. If running find pid number
+      _status, self.pid = self.check()
+      if not _status:
+          # Start service
+          status, self.pid = self.execute(self.inadyn)
+          if status:
+            if DEBUG:
+              log('inadyn starting!')
+      else:
         if DEBUG:
-          log('inadyn starting!')
-  else:
+          log('inadyn already running!')
+
+      while not xbmc.abortRequested:
+        xbmc.sleep(bool(0.250))
+
+    else:
+      if DEBUG:
+        log('inadyn service disabled from settings!!!')
+      # notification(__plugin__, 'inadyn service disabled from settings!!!')
+
+  def stop_service(self):
+    self.kill(self.pid)
+    del self._monitor
+
+  def restart_service(self):
+    self.kill(self.pid)
+    # del self.pid because when restart, self.pid keeps old and wrong variable.
+    del self.pid
     if DEBUG:
-      log('inadyn already running!')
+      log('inadyn restarting!')
+    # get new settings for inadyn execute
+    self._get_settings()
+    # start inadyn with new settings
+    self.start_service()
 
-  while (not xbmc.abortRequested):
-    xbmc.sleep(bool(0.250))
-
-  # kill inadyn before xbmc
-  kill(_pid)
-  if DEBUG:
-    log('inadyn stoping!')
-  xbmc.sleep(1)
-  sys.exit()
-else:
-  if DEBUG:
-    log('inadyn service disabled from settings!!!')
-  # notification(__plugin__, 'inadyn service disabled from settings!!!')
+if __name__ == "__main__":
+  Main()
