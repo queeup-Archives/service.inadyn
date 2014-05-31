@@ -147,7 +147,10 @@ class Main:
     del self.pid
     if DEBUG:
       log('inadyn restarting!')
-    self.__init__()
+    # get new settings for inadyn execute
+    self._get_settings()
+    # start inadyn with new settings
+    self.start_service()
 
 if __name__ == "__main__":
   Main()
