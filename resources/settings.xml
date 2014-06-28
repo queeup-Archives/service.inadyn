@@ -14,4 +14,5 @@
   <setting id="INADYN_UPDATE" type="labelenum" label="1022" values="10|30|60" default="30" enable="eq(-10,true)" visible="eq(-10,true)"/>
   <setting id="INADYN_DBG" type="labelenum" label="1026" values="0|1|2|3|4|5" default="0" enable="eq(-11,true)" visible="eq(-11,true)"/>
   <setting type="text" label="1027" enable="false" visible="eq(-12,true)"/>
+  <setting id="INADYN_SSL" type="bool" label="1028" default="false" enable="eq(-13,true)" visible="eq(-13,true)"/>
 </settings>

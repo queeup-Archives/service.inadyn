@@ -14,5 +14,6 @@
   <string id="1024">Kullanıcı Adı</string>
   <string id="1025">Parola</string>
   <string id="1026">Hata ayıklama seviyesini ayarla</string>
-  <string id="1027">[I]Log dosyası: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>  
+  <string id="1027">[I]Log dosyası: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>
+  <string id="1028">HTTPS kullanın (sağlayıcı desteği gerektirir)</string>
 </strings>

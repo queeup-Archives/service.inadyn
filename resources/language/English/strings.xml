@@ -14,5 +14,6 @@
   <string id="1024">Username</string>
   <string id="1025">Password</string>
   <string id="1026">Set debug level</string>
-  <string id="1027">[I]Log file: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>  
+  <string id="1027">[I]Log file: ~/.xbmc/userdata/addon_data/service.inadyn/inadyn.log[/I]</string>
+  <string id="1028">Use HTTPS (requires provider support)</string>
 </strings>
