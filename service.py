@@ -57,7 +57,6 @@ class Main:
     self.INADYN_USER = __settings__('INADYN_USER')
     self.INADYN_PWD = __settings__('INADYN_PWD')
     self.INADYN_DBG = __settings__('INADYN_DBG')
-    self.INADYN_SSL = __settings__('INADYN_SSL')
 
     # i386/i686/x86_64/arm binary support
     self.INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
