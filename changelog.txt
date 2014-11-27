@@ -1,5 +1,9 @@
 service.inadyn:
 ---------------
+version 2.0.9 (27.11.2014)
+-inadyn binary updated to 1.99.12 (build without ssl support)
+-added new providers support comes with 1.99.12 binary.
+
 version 2.0.8 (16.01.2014)
 -inadyn binary updated to 1.99.6
 -added license and binary developer string
