@@ -95,7 +95,15 @@ class Main:
     if os.path.isfile(self.INADYN_PID):
       # read pid from pid file
       with open(self.INADYN_PID, 'r') as pid:
-        return True, int(pid.read())
+        # check if process exist
+        if os.path.exists("/proc/%s" % pid.read()):
+          # process and pid file exist
+          return True, int(pid.read())
+        # if pid file exist but process not exist
+        else:
+          # remoce pid file.
+          os.unlink(self.INADYN_PID)
+          return False, None
     else:
       return False, None
 
