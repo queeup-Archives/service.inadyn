@@ -19,7 +19,7 @@ __settings__ = __addon__.getSetting
 
 
 def log(description):
-    xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
+  xbmc.log("[SERVICE] '%s v%s': DEBUG: %s" % (__plugin__, __version__, description.encode('ascii', 'ignore')), xbmc.LOGNOTICE)
 
 
 class Monitor(xbmc.Monitor):
@@ -109,11 +109,10 @@ class Main:
 
   def execute(self, arg):
     p = Popen(arg, shell=False, stdout=PIPE, close_fds=True)
-    pid = p.pid + 1
+    self.pid = p.pid + 1
     p.communicate()
-    if pid:
-      self.pid = pid
-      return True, pid
+    if self.pid:
+      return True, self.pid
 
   def kill(self, pid):
     try:
@@ -131,11 +130,11 @@ class Main:
       # check if inadyn already running. If running find pid number
       _status, self.pid = self.check()
       if not _status:
-          # Start service
-          status, self.pid = self.execute(self.inadyn)
-          if status:
-            if DEBUG:
-              log('inadyn starting!')
+        # Start service
+        status, self.pid = self.execute(self.inadyn)
+        if status:
+          if DEBUG:
+            log('inadyn starting!')
       else:
         if DEBUG:
           log('inadyn already running!')
