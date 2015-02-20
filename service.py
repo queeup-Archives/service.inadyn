@@ -57,9 +57,13 @@ class Main:
     self.INADYN_USER = __settings__('INADYN_USER')
     self.INADYN_PWD = __settings__('INADYN_PWD')
     self.INADYN_DBG = __settings__('INADYN_DBG')
-
-    # i386/i686/x86_64/arm binary support
-    self.INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
+    
+    # RPi 2 support
+    if os.uname()[4] == 'armv7l':
+      self.INADYN_EXEC = '%s/bin/inadyn.armv6l'
+    else:
+      # i386/i686/x86_64/arm binary support
+      self.INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
     self.INADYN_LOG = '%sinadyn.log' % xbmc.translatePath(__cachedir__)
     self.INADYN_PID = '%sinadyn.pid' % xbmc.translatePath(__cachedir__)
 
