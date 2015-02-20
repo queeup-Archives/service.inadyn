@@ -1,5 +1,10 @@
 service.inadyn:
 ---------------
+version 2.0.10 (20.02.2015)
+-RPi 2 support (thanks to @minoas)
+-check if process exist. If not exist remove pid file
+-better kill by pid process
+
 version 2.0.9 (27.11.2014)
 -inadyn binary updated to 1.99.12 (build without ssl support)
 -added new providers support comes with 1.99.12 binary.
