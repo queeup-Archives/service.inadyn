@@ -60,7 +60,7 @@ class Main:
     
     # RPi 2 support
     if os.uname()[4] == 'armv7l':
-      self.INADYN_EXEC = '%s/bin/inadyn.armv6l'
+      self.INADYN_EXEC = '%s/bin/inadyn.armv6l' % __path__
     else:
       # i386/i686/x86_64/arm binary support
       self.INADYN_EXEC = '%s/bin/inadyn.%s' % (__path__, os.uname()[4])
