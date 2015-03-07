@@ -26,15 +26,10 @@ class Monitor(xbmc.Monitor):
   def __init__(self, *args, **kwargs):
     xbmc.Monitor.__init__(self)
     self.restart = kwargs['restart']
-    self.stop = kwargs['stop']
 
   def onSettingsChanged(self):
     log('Settings Changed!')
     self.restart()
-
-  def onAbortRequested(self):
-    log('Stoping Inadyn Service!')
-    self.stop()
 
 
 class Main:
@@ -42,11 +37,11 @@ class Main:
     self.pid = None
     self._get_settings()
     # self._monitor = Monitor(action=self.restart_service)
-    self._monitor = Monitor(restart=self.restart_service, stop=self.stop_service)
+    self._monitor = Monitor(restart=self.restart_service)
     # if not executable change permission
     if not os.access(self.INADYN_EXEC, os.X_OK):
       os.chmod(self.INADYN_EXEC, 0755)
-    self.start_service()
+    self._daemon()
 
   def _get_settings(self):
     # Get settings
@@ -142,10 +137,6 @@ class Main:
       else:
         if DEBUG:
           log('inadyn already running!')
-
-      while not xbmc.abortRequested:
-        xbmc.sleep(bool(0.250))
-
     else:
       if DEBUG:
         log('inadyn service disabled from settings!!!')
@@ -153,7 +144,6 @@ class Main:
 
   def stop_service(self):
     self.kill(self.pid)
-    del self._monitor
 
   def restart_service(self):
     self.kill(self.pid)
@@ -165,6 +155,17 @@ class Main:
     self._get_settings()
     # start inadyn with new settings
     self.start_service()
+  
+  def _daemon(self):
+    self.start_service()
+    while True:
+      if self._monitor.waitForAbort(1):
+        log('Abort requested.')
+        break
+      xbmc.sleep(500)
+    log('Stoping Inadyn Service!')
+    self.stop_service()
+    del self._monitor
 
 if __name__ == "__main__":
   Main()
