@@ -49,7 +49,7 @@ class Main:
     self.pid = None
     self._get_settings()
     self._monitor = Monitor(restart=self.restart_service)
-     
+
   def _get_settings(self):
     # Get settings
     self.INADYN_START = addon_settings('INADYN_START')
@@ -59,7 +59,7 @@ class Main:
     self.INADYN_USER = addon_settings('INADYN_USER')
     self.INADYN_PWD = addon_settings('INADYN_PWD')
     self.INADYN_DBG = addon_settings('INADYN_DBG')
-    
+
     # arm support
     if 'arm' in os.uname()[4]:
       self.INADYN_EXEC = '%s/bin/inadyn.arm' % addon_path
@@ -107,7 +107,7 @@ class Main:
           return True, int(pid.read())
         # if pid file exist but process not exist
         else:
-          # remoce pid file.
+          # remove pid file.
           os.unlink(self.INADYN_PID)
           return False, None
     else:
@@ -158,7 +158,7 @@ class Main:
     self._get_settings()
     # start inadyn with new settings
     self.start_service()
-  
+
   def _daemon(self):
     self.start_service()
     while True:
@@ -166,7 +166,7 @@ class Main:
         log('Abort requested!')
         break
       xbmc.sleep(500)
-    log('Service stoping!')
+    log('Service stopping!')
     self.stop_service()
     del self._monitor
 
